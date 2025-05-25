@@ -204,45 +204,103 @@ const ElectricitySection = () => {
         </div>
       </div>
 
-      {/* Modal del Video */}
+      {/* Modal del Video - ACTUALIZADO CON REPRODUCTOR REAL */}
       {showVideoModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-gray-800">🎬 Video: Experimento del Globo Mágico</h3>
               <button 
                 onClick={() => setShowVideoModal(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl"
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full"
               >
                 ×
               </button>
             </div>
             
-            {/* Simulación de Video Player */}
-            <div className="bg-gray-900 rounded-xl aspect-video flex items-center justify-center mb-6">
-              <div className="text-center text-white">
-                <PlayCircle className="w-16 h-16 mx-auto mb-4" />
-                <p className="text-xl font-bold">Experimento del Globo Mágico</p>
-                <p className="text-sm opacity-75">Duración: 3:45 min</p>
-              </div>
+            {/* REPRODUCTOR DE VIDEO REAL */}
+            <div className="bg-black rounded-xl overflow-hidden mb-6 shadow-2xl">
+              <video 
+                width="100%" 
+                height="auto"
+                controls
+                className="w-full max-h-[500px] object-contain"
+                poster="/videos/globo-thumbnail.jpg" // Opcional: imagen de vista previa
+              >
+                <source src="/videos/Experimento Globo Mgico_free.mp4" type="video/mp4" />
+                <source src="/videos/experimento-globo.webm" type="video/webm" />
+                {/* Mensaje para navegadores que no soportan video */}
+                <div className="bg-gray-800 text-white p-8 text-center">
+                  <p className="text-lg mb-4">Tu navegador no soporta la reproducción de video.</p>
+                  <p className="text-sm">Por favor, actualiza tu navegador o descarga el video directamente.</p>
+                  <a 
+                    href="/videos/experimento-globo.mp4" 
+                    download
+                    className="inline-block mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Descargar Video
+                  </a>
+                </div>
+              </video>
             </div>
             
+            {/* Información del Video */}
             <div className="space-y-4">
-              <h4 className="font-bold text-gray-800">🔬 Lo que aprenderás:</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Cómo crear electricidad estática</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Por qué se pegan los papelitos</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span>Consejos de seguridad</span>
-                </li>
-              </ul>
+              <div className="bg-blue-50 rounded-xl p-4">
+                <h4 className="font-bold text-blue-800 mb-2">📋 Información del Video</h4>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-semibold text-blue-700">Duración:</span>
+                    <span className="text-blue-600 ml-2">3:45 min</span>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-blue-700">Nivel:</span>
+                    <span className="text-blue-600 ml-2">Principiante</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 rounded-xl p-4">
+                <h4 className="font-bold text-green-800 mb-3">🔬 Lo que aprenderás:</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-green-700">Cómo crear electricidad estática</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-green-700">Por qué se pegan los papelitos</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-green-700">Consejos de seguridad importantes</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="text-green-700">Aplicaciones en la vida real</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Botones de Acción */}
+              <div className="flex gap-3 pt-4">
+                <button 
+                  onClick={() => setShowVideoModal(false)}
+                  className="flex-1 bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-xl hover:bg-gray-200 transition-colors"
+                >
+                  Cerrar Video
+                </button>
+                <button 
+                  onClick={() => {
+                    setShowVideoModal(false);
+                    setShowQuizModal(true);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 px-6 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all flex items-center justify-center gap-2"
+                >
+                  <Brain className="w-5 h-5" />
+                  Hacer Quiz
+                </button>
+              </div>
             </div>
           </div>
         </div>

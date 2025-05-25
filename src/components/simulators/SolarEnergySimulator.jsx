@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Sun, Home, Zap, TrendingUp, Calculator, MapPin, Calendar, DollarSign, Leaf, Award } from 'lucide-react';
+import { Sun, Home, Zap, TrendingUp, Calculator, MapPin, Calendar, DollarSign, Leaf, Award, ArrowLeft } from 'lucide-react';
 
-const SolarEnergySimulator = () => {
+const SolarEnergySimulator = ({ onBack }) => {
   const [houseType, setHouseType] = useState('small'); // small, medium, large
   const [location, setLocation] = useState('neiva'); // neiva, pitalito, garzon
   const [roofArea, setRoofArea] = useState(50); // m²
@@ -64,6 +64,29 @@ const SolarEnergySimulator = () => {
     });
   };
 
+  const handleBackToMenu = () => {
+    if (onBack) {
+      onBack(); // Función pasada como prop
+    } else {
+      // Fallback si no hay función onBack
+      window.history.back();
+    }
+  };
+
+  // Controles de teclado
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      switch (e.key) {
+        case 'Escape':
+          handleBackToMenu();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
   useEffect(() => {
     calculateSolarSystem();
   }, [houseType, location, roofArea, monthlyBill]);
@@ -82,16 +105,15 @@ const SolarEnergySimulator = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-between mb-6">
             <button 
-              onClick={() => window.history.back()}
+              onClick={handleBackToMenu}
               className="flex items-center gap-2 bg-white text-blue-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg border border-gray-200"
+              title="Volver al menú (ESC)"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Regresar
+              <ArrowLeft className="w-5 h-5" />
+              Volver al Menú
             </button>
             <button 
-              onClick={() => window.open('/', '_self')}
+              onClick={handleBackToMenu}
               className="flex items-center gap-2 bg-blue-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-600 transform hover:scale-105 transition-all shadow-lg"
             >
               <Home className="w-5 h-5" />
@@ -105,6 +127,13 @@ const SolarEnergySimulator = () => {
           <p className="text-xl text-gray-600">
             Descubre cuánto puedes ahorrar con paneles solares en tu casa del Huila
           </p>
+          
+          {/* Información de controles */}
+          <div className="mt-4">
+            <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-600">
+              <span>💡 Tip: Presiona ESC para regresar</span>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

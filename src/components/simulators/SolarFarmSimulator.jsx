@@ -1,8 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Plus, RotateCcw, Play, Sun, Zap, Home, Settings, TrendingUp, Trophy, Battery } from 'lucide-react';
+import { Plus, RotateCcw, Play, Sun, Zap, Home, Settings, TrendingUp, Trophy, Battery, ArrowLeft } from 'lucide-react';
 
-const SolarFarmSimulator = () => {
+const SolarFarmSimulator = ({ onBack }) => {
   const [panels, setPanels] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [timeOfDay, setTimeOfDay] = useState(12); // 12 = mediodía
@@ -81,6 +81,47 @@ const SolarFarmSimulator = () => {
     setWeather(nextWeather);
   };
 
+  const handleBackToMenu = () => {
+    if (onBack) {
+      onBack(); // Función pasada como prop
+    } else {
+      // Fallback si no hay función onBack
+      window.history.back();
+    }
+  };
+
+  // Controles de teclado
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      switch (e.key) {
+        case 'Escape':
+          handleBackToMenu();
+          break;
+        case ' ':
+          e.preventDefault();
+          toggleSimulation();
+          break;
+        case 'p':
+        case 'P':
+          if (money >= 1000) {
+            addPanel();
+          }
+          break;
+        case 'r':
+        case 'R':
+          resetSimulation();
+          break;
+        case 'w':
+        case 'W':
+          changeWeather();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [money, isRunning]);
+
   const getSolarEfficiency = () => {
     // Eficiencia basada en hora del día (curva solar)
     const timeEfficiency = Math.max(0, Math.sin(((timeOfDay - 6) / 12) * Math.PI));
@@ -127,16 +168,15 @@ const SolarFarmSimulator = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-between mb-6">
             <button 
-              onClick={() => window.history.back()}
+              onClick={handleBackToMenu}
               className="flex items-center gap-2 bg-white text-blue-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg"
+              title="Volver al menú (ESC)"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Regresar
+              <ArrowLeft className="w-5 h-5" />
+              Volver al Menú
             </button>
             <button 
-              onClick={() => window.open('/', '_self')}
+              onClick={handleBackToMenu}
               className="flex items-center gap-2 bg-blue-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-600 transform hover:scale-105 transition-all shadow-lg"
             >
               <Home className="w-5 h-5" />
@@ -150,6 +190,18 @@ const SolarFarmSimulator = () => {
           <p className="text-xl text-gray-600">
             Construye tu propia granja solar y genera energía limpia para el Huila
           </p>
+          
+          {/* Información de controles */}
+          <div className="mt-4">
+            <div className="inline-flex items-center gap-4 bg-gray-100 px-4 py-2 rounded-full text-sm text-gray-600">
+              <span>⌨️ Controles:</span>
+              <span>ESC - Salir</span>
+              <span>ESPACIO - Iniciar/Pausar</span>
+              <span>P - Agregar Panel</span>
+              <span>W - Cambiar Clima</span>
+              <span>R - Reiniciar</span>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -167,6 +219,7 @@ const SolarFarmSimulator = () => {
                   onClick={addPanel}
                   disabled={money < 1000}
                   className="w-full py-3 bg-green-500 text-white font-bold rounded-xl hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  title="Agregar panel (P)"
                 >
                   <Plus className="w-5 h-5" />
                   Agregar Panel ($1,000)
@@ -179,6 +232,7 @@ const SolarFarmSimulator = () => {
                       ? 'bg-red-500 hover:bg-red-600 text-white' 
                       : 'bg-blue-500 hover:bg-blue-600 text-white'
                   }`}
+                  title="Iniciar/Pausar simulación (ESPACIO)"
                 >
                   <Play className="w-5 h-5" />
                   {isRunning ? 'Pausar' : 'Iniciar'} Simulación
@@ -187,6 +241,7 @@ const SolarFarmSimulator = () => {
                 <button 
                   onClick={changeWeather}
                   className="w-full py-3 bg-yellow-500 text-white font-bold rounded-xl hover:bg-yellow-600 flex items-center justify-center gap-2"
+                  title="Cambiar clima (W)"
                 >
                   <span className="text-xl">{weatherTypes[weather].icon}</span>
                   Cambiar Clima
@@ -195,6 +250,7 @@ const SolarFarmSimulator = () => {
                 <button 
                   onClick={resetSimulation}
                   className="w-full py-3 bg-gray-500 text-white font-bold rounded-xl hover:bg-gray-600 flex items-center justify-center gap-2"
+                  title="Reiniciar simulación (R)"
                 >
                   <RotateCcw className="w-5 h-5" />
                   Reiniciar
@@ -357,6 +413,9 @@ const SolarFarmSimulator = () => {
                       <Home className="w-12 h-12 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-600 font-semibold">
                         Haz clic en "Agregar Panel" para construir tu granja solar
+                      </p>
+                      <p className="text-gray-500 text-sm mt-2">
+                        O presiona P en tu teclado
                       </p>
                     </div>
                   </div>
