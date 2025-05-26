@@ -8,8 +8,8 @@ import ElectricitySection from '@/components/learning/ElectricitySection';
 import ElectroHuilaSection from '@/components/learning/ElectroHuilaSection';
 import RenewableEnergySection from '@/components/learning/RenewableEnergySection';
 import SafetySection from '@/components/learning/SafetySection';
-import LaboratorioBasico from '@/components/simulators/LaboratorioBasico';
-import LaboratorioAvanzado from '@/components/simulators/LaboratorioAvanzado';
+import ElectroHuilaKidsHero from '@/components/ElectroHuilaKidsHero';
+import LucilaAdventuresSection from '@/components/LucilaAdventuresSection';
 
 // COMPONENTE DE CARGA
 const LoadingSpinner = () => (
@@ -31,7 +31,7 @@ export default function HomePage() {
     setMounted(true);
     
     const handleScroll = () => {
-      const sections = ['hero', 'learn', 'games', 'experiments', 'coloring', 'circuits', 'solar'];
+      const sections = ['hero', 'learn', 'games', 'experiments', 'coloring', 'circuits', 'luzila'];
       const currentPos = window.scrollY + 100;
 
       for (const sectionId of sections.reverse()) {
@@ -42,10 +42,11 @@ export default function HomePage() {
         }
       }
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   // FUNCIONES DE NAVEGACIÓN
   const navigateToGame = (gameId: string) => {
     const gameRoutes = {
@@ -148,8 +149,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="relative">{/* AQUÍ VAN LAS SIGUIENTES PARTES */}
-    {/* BOTÓN ELECTROHUILA - FIJO EN LA ESQUINA */}
+    <main className="relative">
+      {/* BOTÓN ELECTROHUILA - FIJO EN LA ESQUINA */}
       <a 
         href="https://electrohuila.com.co" 
         target="_blank" 
@@ -170,7 +171,7 @@ export default function HomePage() {
             { id: 'experiments', name: 'Experimentos', icon: Beaker },
             { id: 'coloring', name: 'Colorear', icon: Palette },
             { id: 'circuits', name: 'Circuitos', icon: Zap },
-            { id: 'solar', name: 'Solar', icon: Sun }
+            { id: 'luzila', name: 'Luzila', icon: Heart }
           ].map((section) => (
             <button
               key={section.id}
@@ -187,79 +188,7 @@ export default function HomePage() {
           ))}
         </div>
       </nav>
-      
-      {/* HERO SECTION */}
-      <section id="hero" className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-teal-500 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-20 h-20 bg-orange-300 bg-opacity-20 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-32 left-32 w-16 h-16 bg-yellow-300 bg-opacity-20 rounded-full animate-pulse"></div>
-          
-          <div className="absolute top-10 left-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/4 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-3/4 left-1/3 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-        </div>
-
-        <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="relative mb-8">
-              <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-r from-orange-400 to-red-500 rounded-full shadow-2xl mb-6 relative">
-                <Zap className="w-16 h-16 text-white animate-pulse" />
-                
-                <div className="absolute inset-0 animate-spin" style={{ animationDuration: '8s' }}>
-                  <Star className="w-6 h-6 text-orange-300 absolute -top-2 left-1/2 transform -translate-x-1/2" />
-                  <Star className="w-4 h-4 text-orange-400 absolute top-1/2 -right-2 transform -translate-y-1/2" />
-                  <Star className="w-5 h-5 text-orange-200 absolute -bottom-2 right-1/4" />
-                  <Star className="w-4 h-4 text-orange-300 absolute top-1/4 -left-2" />
-                </div>
-              </div>
-            </div>
-
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
-                Explora
-              </span>
-              <br />
-              <span className="text-white">y Aprende</span>
-            </h1>
-
-            <div className="h-16 mb-8">
-              <p className="text-xl md:text-2xl text-white font-medium">
-                ¡Cada día es una nueva aventura de aprendizaje! 🌟
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
-              {[
-                { id: 'learn', icon: Brain, name: 'Aprender', color: 'from-blue-500 to-purple-600' },
-                { id: 'games', icon: Rocket, name: 'Juegos', color: 'from-green-500 to-blue-500' },
-                { id: 'experiments', icon: Beaker, name: 'Experimentos', color: 'from-red-500 to-pink-600' },
-                { id: 'coloring', icon: Palette, name: 'Colorear', color: 'from-pink-500 to-purple-600' },
-                { id: 'circuits', icon: Zap, name: 'Circuitos', color: 'from-yellow-500 to-orange-600' },
-                { id: 'solar', icon: Sun, name: 'Solar', color: 'from-orange-500 to-red-500' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => navigateToSection(item.id)}
-                  className={`group relative bg-gradient-to-r ${item.color} p-6 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
-                >
-                  <div className="text-center">
-                    <item.icon className="w-8 h-8 text-white mx-auto mb-2 group-hover:animate-bounce" />
-                    <span className="text-white font-bold text-sm">{item.name}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <div className="animate-bounce">
-              <ChevronDown className="w-8 h-8 text-white mx-auto" />
-              <p className="text-white text-sm mt-2">Desliza para explorar</p>
-            </div>
-          </div>
-        </div>
-      </section>{/* AQUÍ VAN LAS SIGUIENTES PARTES */}
+      <ElectroHuilaKidsHero navigateToSection={navigateToSection} />
       {/* SECCIÓN DE APRENDIZAJE */}
       <section id="learn" className="min-h-screen bg-gradient-to-b from-blue-50 to-purple-100 py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -280,7 +209,7 @@ export default function HomePage() {
                 {[
                   { id: 'electricity', name: '¿Qué es la Electricidad?', icon: Zap },
                   { id: 'electrohuila', name: 'ElectroHuila', icon: Home },
-                  { id: 'renewable', name: 'Energías Renovables', icon: Sun },
+                  
                   { id: 'safety', name: 'Seguridad Eléctrica', icon: Settings }
                 ].map((tab) => (
                   <button
@@ -319,77 +248,7 @@ export default function HomePage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Simulador de Granja Solar */}
-              <div className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg text-2xl">
-                  🌞
-                </div>
-                <h4 className="text-2xl font-bold text-gray-800 mb-3">Simulador de Granja Solar</h4>
-                <p className="text-gray-600 text-sm mb-4">
-                  Construye tu propia granja solar paso a paso. Aprende cómo funciona la energía solar a gran escala.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Construcción interactiva de paneles</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Simulación del clima del Huila</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Desafíos y misiones educativas</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Cálculo de CO₂ ahorrado</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => navigateToSolarSimulator('granja')}
-                  className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all shadow-lg flex items-center justify-center gap-2"
-                >
-                  <Sun className="w-5 h-5" />
-                  Abrir Simulador
-                </button>
-              </div>
-
-              {/* Calculadora Solar */}
-              <div className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-teal-500 rounded-2xl flex items-center justify-center mb-6 text-white shadow-lg text-2xl">
-                  🏠
-                </div>
-                <h4 className="text-2xl font-bold text-gray-800 mb-3">Calculadora Solar Residencial</h4>
-                <p className="text-gray-600 text-sm mb-4">
-                  Calcula exactamente cuánto puedes ahorrar con paneles solares en tu casa del Huila.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span>Análisis personalizado de consumo</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span>Cálculo de ahorro mensual y anual</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span>Proyección a 25 años</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span>Impacto ambiental calculado</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => navigateToSolarSimulator('calculadora')}
-                  className="w-full bg-gradient-to-r from-green-400 to-teal-500 text-white font-bold py-3 rounded-2xl hover:shadow-xl transform hover:scale-105 transition-all shadow-lg flex items-center justify-center gap-2"
-                >
-                  <Calculator className="w-5 h-5" />
-                  Abrir Calculadora
-                </button>
-              </div>
+              
             </div>
           </div>
 
@@ -434,7 +293,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>{/* AQUÍ VAN LAS SIGUIENTES PARTES */}
+      </section>
       {/* ZONA DE JUEGOS */}
       <section id="games" className="min-h-screen bg-gradient-to-b from-green-50 to-blue-100 py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -978,147 +837,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* SECCIÓN SOLAR */}
-      <section id="solar" className="min-h-screen bg-gradient-to-b from-orange-50 to-yellow-100 py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full mb-6 shadow-lg">
-              <Sun className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-5xl font-bold text-gray-800 mb-4">
-              Energía Solar ElectroHuila
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              ¡Descubre el poder del sol! Aprende sobre energía solar y cómo ElectroHuila está impulsando un futuro más verde para el Huila
-            </p>
-          </div>
-
-          {/* Información sobre el Huila como potencia verde */}
-          <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-3xl p-8 mb-16 text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-black bg-opacity-10"></div>
-            <div className="relative z-10 text-center">
-              <h3 className="text-4xl font-bold mb-4">🌞 El Huila: Potencia Verde de Colombia</h3>
-              <p className="text-xl mb-8">
-                Nuestro departamento tiene condiciones únicas para las energías limpias
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white bg-opacity-20 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">🌞</div>
-                  <h4 className="text-xl font-bold mb-2">Sol Abundante</h4>
-                  <p className="text-sm mb-2">4.5+ horas de sol intenso diario</p>
-                  <p className="text-xs">Ideal para paneles solares</p>
-                </div>
-                <div className="bg-white bg-opacity-20 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">💧</div>
-                  <h4 className="text-xl font-bold mb-2">Ríos Poderosos</h4>
-                  <p className="text-sm mb-2">Río Magdalena y más de 20 afluentes</p>
-                  <p className="text-xs">Perfectos para hidroeléctricas</p>
-                </div>
-                <div className="bg-white bg-opacity-20 rounded-2xl p-6">
-                  <div className="text-4xl mb-3">💎</div>
-                  <h4 className="text-xl font-bold mb-2">Vientos Constantes</h4>
-                  <p className="text-sm mb-2">Zonas con vientos de 6+ m/s</p>
-                  <p className="text-xs">Excelentes para energía eólica</p>
-                </div>
-              </div>
-
-              {/* Meta ElectroHuila 2030 */}
-              <div className="bg-white bg-opacity-20 rounded-2xl p-6 mb-8">
-                <div className="text-3xl mb-3">🎯</div>
-                <h4 className="text-2xl font-bold mb-4">Meta ElectroHuila 2030</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <div className="text-4xl font-bold">50%</div>
-                    <div className="text-sm">Energía Renovable</div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold">100K</div>
-                    <div className="text-sm">Hogares con Solar</div>
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold">0</div>
-                    <div className="text-sm">Emisiones Netas</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTÓN DIRECTO AL SIMULADOR DE GRANJA SOLAR */}
-              <button 
-                onClick={() => router.push('/granja-solar')}
-                className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-3 mx-auto"
-              >
-                <Gamepad2 className="w-6 h-6" />
-                Simular Granja Solar
-              </button>
-            </div>
-          </div>
-
-          {/* ¡Únete al Futuro Verde! */}
-          <div className="bg-gradient-to-r from-purple-500 to-pink-600 rounded-3xl p-8 mb-16 text-white text-center">
-            <h3 className="text-3xl font-bold mb-4">🚀 ¡Únete al Futuro Verde!</h3>
-            <p className="text-xl mb-8">
-              Descubre cómo puedes ser parte de la transición energética del Huila
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* BOTÓN DIRECTO AL SIMULADOR DE GRANJA SOLAR */}
-              <button 
-                onClick={() => router.push('/granja-solar')}
-                className="bg-white text-purple-600 font-bold py-3 px-6 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2 justify-center"
-              >
-                <Gamepad2 className="w-5 h-5" />
-                Simular Granja Solar
-              </button>
-              
-              {/* BOTÓN DIRECTO A LA CALCULADORA SOLAR */}
-              <button 
-                onClick={() => router.push('/simulador-solar')}
-                className="bg-white text-purple-600 font-bold py-3 px-6 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2 justify-center"
-              >
-                <Play className="w-5 h-5" />
-                Calculadora Solar
-              </button>
-              
-              <button 
-                onClick={() => router.push('/proyectos')}
-                className="bg-transparent border-2 border-white text-white font-bold py-3 px-6 rounded-2xl hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all flex items-center gap-2 justify-center"
-              >
-                <ExternalLink className="w-5 h-5" />
-                Conocer Más Proyectos
-              </button>
-            </div>
-          </div>
-
-          {/* Beneficios de la Energía Solar */}
-          <div className="bg-gradient-to-r from-green-100 to-teal-100 rounded-3xl p-8 border-4 border-green-200">
-            <div className="text-center">
-              <h3 className="text-3xl font-bold text-green-800 mb-6">🌱 Beneficios de la Energía Solar</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div className="bg-white rounded-2xl p-6 shadow-lg">
-                  <div className="text-3xl mb-3">💰</div>
-                  <h4 className="font-bold text-gray-800 mb-2">Ahorro Económico</h4>
-                  <p className="text-sm text-gray-600">Reduce tu factura eléctrica hasta un 90%</p>
-                </div>
-                <div className="bg-white rounded-2xl p-6 shadow-lg">
-                  <div className="text-3xl mb-3">🌍</div>
-                  <h4 className="font-bold text-gray-800 mb-2">Cuida el Planeta</h4>
-                  <p className="text-sm text-gray-600">Energía 100% limpia y renovable</p>
-                </div>
-                <div className="bg-white rounded-2xl p-6 shadow-lg">
-                  <div className="text-3xl mb-3">🏠</div>
-                  <h4 className="font-bold text-gray-800 mb-2">Aumenta el Valor</h4>
-                  <p className="text-sm text-gray-600">Tu propiedad se valoriza con paneles solares</p>
-                </div>
-                <div className="bg-white rounded-2xl p-6 shadow-lg">
-                  <div className="text-3xl mb-3">⚡</div>
-                  <h4 className="font-bold text-gray-800 mb-2">Energía Confiable</h4>
-                  <p className="text-sm text-gray-600">El sol brilla todos los días en el Huila</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <LucilaAdventuresSection />
       {/* FOOTER */}
       <footer className="bg-gradient-to-r from-purple-800 to-blue-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
@@ -1147,6 +866,7 @@ export default function HomePage() {
               © 2025 Explora y Aprende - Hecho con ❤️ para mentes curiosas - Powered by ElectroHuila
             </p>
           </div>
+          
         </div>
       </footer>
     </main>
