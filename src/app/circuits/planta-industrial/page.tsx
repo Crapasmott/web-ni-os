@@ -73,7 +73,7 @@ export default function PlantaIndustrialPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <Link href="/simuladores" className="flex items-center gap-2 text-red-700 hover:text-red-800">
+          <Link href="/circuits" className="flex items-center gap-2 text-red-700 hover:text-red-800">
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Volver a Simuladores</span>
           </Link>

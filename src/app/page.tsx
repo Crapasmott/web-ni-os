@@ -8,7 +8,8 @@ import ElectricitySection from '@/components/learning/ElectricitySection';
 import ElectroHuilaSection from '@/components/learning/ElectroHuilaSection';
 import RenewableEnergySection from '@/components/learning/RenewableEnergySection';
 import SafetySection from '@/components/learning/SafetySection';
-
+import LaboratorioBasico from '@/components/simulators/LaboratorioBasico';
+import LaboratorioAvanzado from '@/components/simulators/LaboratorioAvanzado';
 
 // COMPONENTE DE CARGA
 const LoadingSpinner = () => (

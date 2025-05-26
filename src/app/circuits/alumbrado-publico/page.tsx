@@ -31,7 +31,7 @@ export default function AlumbradoPublicoPage() {
   return (
     <div className="min-h-screen bg-purple-50 p-4">
       <div className="max-w-4xl mx-auto">
-        <Link href="/simuladores" className="flex items-center gap-2 text-purple-700 mb-8">
+        <Link href="/circuits" className="flex items-center gap-2 text-purple-700 mb-8">
           <ArrowLeft className="w-5 h-5" />
           Volver a Simuladores
         </Link>
