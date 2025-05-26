@@ -8,6 +8,8 @@ import ElectricitySection from '@/components/learning/ElectricitySection';
 import ElectroHuilaSection from '@/components/learning/ElectroHuilaSection';
 import RenewableEnergySection from '@/components/learning/RenewableEnergySection';
 import SafetySection from '@/components/learning/SafetySection';
+import LaboratorioBasico from '@/components/simulators/LaboratorioBasico';
+import LaboratorioAvanzado from '@/components/simulators/LaboratorioAvanzado';
 
 // COMPONENTE DE CARGA
 const LoadingSpinner = () => (
@@ -609,7 +611,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>{/* AQUÍ VAN LAS SIGUIENTES PARTES */}
-      {/* EXPERIMENTOS CIENTÍFICOS */}
+     {/* EXPERIMENTOS CIENTÍFICOS */}
       <section id="experiments" className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-100 py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -1042,7 +1044,7 @@ export default function HomePage() {
 
               {/* BOTÓN DIRECTO AL SIMULADOR DE GRANJA SOLAR */}
               <button 
-                onClick={() => router.push('/simulators/SolarEnergySimulator.jsx')}
+                onClick={() => router.push('/granja-solar')}
                 className="bg-white text-purple-600 font-bold py-4 px-8 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-3 mx-auto"
               >
                 <Gamepad2 className="w-6 h-6" />
@@ -1061,7 +1063,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {/* BOTÓN DIRECTO AL SIMULADOR DE GRANJA SOLAR */}
               <button 
-                onClick={() => router.push('/simulators/SolarEnergySimulator.jsx')}
+                onClick={() => router.push('/granja-solar')}
                 className="bg-white text-purple-600 font-bold py-3 px-6 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2 justify-center"
               >
                 <Gamepad2 className="w-5 h-5" />
@@ -1070,7 +1072,7 @@ export default function HomePage() {
               
               {/* BOTÓN DIRECTO A LA CALCULADORA SOLAR */}
               <button 
-                onClick={() => router.push('/simulators/solar-calculator')}
+                onClick={() => router.push('/simulador-solar')}
                 className="bg-white text-purple-600 font-bold py-3 px-6 rounded-2xl hover:bg-gray-100 transform hover:scale-105 transition-all shadow-lg flex items-center gap-2 justify-center"
               >
                 <Play className="w-5 h-5" />
@@ -1078,7 +1080,7 @@ export default function HomePage() {
               </button>
               
               <button 
-                onClick={() => alert('🌱 ¡Próximamente! Más información sobre proyectos verdes estará disponible muy pronto.')}
+                onClick={() => router.push('/proyectos')}
                 className="bg-transparent border-2 border-white text-white font-bold py-3 px-6 rounded-2xl hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all flex items-center gap-2 justify-center"
               >
                 <ExternalLink className="w-5 h-5" />
@@ -1142,7 +1144,7 @@ export default function HomePage() {
           
           <div className="border-t border-purple-700 pt-8">
             <p className="text-purple-300">
-              © 2024 Explora y Aprende - Hecho con ❤️ para mentes curiosas - Powered by ElectroHuila
+              © 2025 Explora y Aprende - Hecho con ❤️ para mentes curiosas - Powered by ElectroHuila
             </p>
           </div>
         </div>
