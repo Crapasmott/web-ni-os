@@ -154,7 +154,7 @@ export default function HomePage() {
     <main className="relative">
       {/* BOTÓN ELECTROHUILA - FIJO EN LA ESQUINA */}
       <a 
-        href="https://electrohuila.com.co" 
+        href="https://demokids.vercel.app/" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-6 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all font-bold flex items-center gap-2"
