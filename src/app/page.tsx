@@ -854,7 +854,7 @@ export default function HomePage() {
             </p>
             
             <a 
-              href="/" 
+              href="https://demokids.vercel.app/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold hover:from-yellow-600 hover:to-orange-700 transform hover:scale-105 transition-all shadow-lg"
