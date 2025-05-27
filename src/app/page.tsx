@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Zap, Star, Rocket, Brain, Palette, Beaker, Sun, ChevronDown, Calculator, BookOpen, Globe, Atom, Lightbulb, Play, Trophy, Timer, Gamepad2, Flame, Droplets, Sparkles, Download, RotateCcw, Heart, Battery, Power, Home, Settings, ExternalLink, Leaf } from 'lucide-react';
 
 // Importar componentes de aprendizaje
+
 import ElectricitySection from '@/components/learning/ElectricitySection';
 import ElectroHuilaSection from '@/components/learning/ElectroHuilaSection';
 import RenewableEnergySection from '@/components/learning/RenewableEnergySection';
