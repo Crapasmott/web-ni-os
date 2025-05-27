@@ -11,6 +11,7 @@ import RenewableEnergySection from '@/components/learning/RenewableEnergySection
 import SafetySection from '@/components/learning/SafetySection';
 import ElectroHuilaKidsHero from '@/components/ElectroHuilaKidsHero';
 import LucilaAdventuresSection from '@/components/LucilaAdventuresSection';
+import CircuitSimulatorPage from '@/components/CircuitSimulatorPage';
 
 // COMPONENTE DE CARGA
 const LoadingSpinner = () => (
@@ -837,9 +838,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {/* SECCIÓN SOLAR */}
-    <LucilaAdventuresSection />
-      {/* FOOTER */}
+{/* SECCIÓN SOLAR */}
+<LucilaAdventuresSection />
+
+{/* FOOTER */}
       <footer className="bg-gradient-to-r from-purple-800 to-blue-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <div className="mb-8">
@@ -852,7 +854,7 @@ export default function HomePage() {
             </p>
             
             <a 
-              href="https://electrohuila.com.co" 
+              href="/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold hover:from-yellow-600 hover:to-orange-700 transform hover:scale-105 transition-all shadow-lg"

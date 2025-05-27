@@ -1,17 +1,18 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { Zap, Star, Play, Pause, RotateCcw, Volume2, VolumeX, ChevronLeft, ChevronRight, BookOpen, Eye, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Play, Pause, RotateCcw, Volume2, VolumeX, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 
 const PureInteractiveComicBook = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isReading, setIsReading] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [readingSpeed, setReadingSpeed] = useState(4000);
-  const [bookOpen, setBookOpen] = useState(true);
-  const [lucilaInteraction, setLucilaInteraction] = useState(null);
+  const readingSpeed = 4000;
+  // const [bookOpen, setBookOpen] = useState(true);
+  const [lucilaInteraction, setLucilaInteraction] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const pageRef = useRef(null);
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [isAudioLoaded, setIsAudioLoaded] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
@@ -79,7 +80,7 @@ const PureInteractiveComicBook = () => {
       mood: "serious",
       effects: ["warning-pulse", "danger-scan", "alert-border"],
       pageStyle: "warning",
-      audioFile: "/audio/page4-alerta.mp3" // 🎵 Coloca tu MP3 aquí
+      audioFile: "/audios/audio4.mp3" // 🎵 Coloca tu MP3 aquí
     },
     {
       id: 4,
@@ -105,14 +106,14 @@ const PureInteractiveComicBook = () => {
       mood: "inspiring",
       effects: ["invitation-glow", "team-aura", "hope-sparkles"],
       pageStyle: "heroic",
-      audioFile: "/audios/audio6.mp3" // 🎵 Coloca tu MP3 aquí
+      audioFile: "/audio/page6-mision.mp3" // 🎵 Coloca tu MP3 aquí
     }
   ];
 
   // Auto-lectura
   useEffect(() => {
-    let interval;
-    if (isReading && bookOpen) {
+    let interval: NodeJS.Timeout | undefined;
+    if (isReading) {
       interval = setInterval(() => {
         setCurrentPage(prev => {
           if (prev < comicPages.length - 1) {
@@ -125,7 +126,10 @@ const PureInteractiveComicBook = () => {
       }, readingSpeed);
     }
     return () => clearInterval(interval);
-  }, [isReading, readingSpeed, bookOpen]);
+  }, [isReading, readingSpeed, comicPages.length]);
+
+  // Obtener los datos de la página actual antes de cualquier uso
+  const currentPageData = comicPages[currentPage];
 
   // 🎵 SISTEMA DE AUDIO - Control de reproducción
   useEffect(() => {
@@ -142,10 +146,16 @@ const PureInteractiveComicBook = () => {
       // Reproducir automáticamente si está habilitado
       const playAudio = async () => {
         try {
-          await audioRef.current.play();
-          setIsAudioLoaded(true);
+          if (audioRef.current) {
+            await audioRef.current.play();
+            setIsAudioLoaded(true);
+          }
         } catch (error) {
-          console.log('Error reproduciendo audio:', error.message);
+          if (error instanceof Error) {
+            console.log('Error reproduciendo audio:', error.message);
+          } else {
+            console.log('Error reproduciendo audio:', error);
+          }
           setAudioError(true);
           setIsAudioLoaded(false);
         }
@@ -156,7 +166,7 @@ const PureInteractiveComicBook = () => {
       // Pausar audio si está deshabilitado
       audioRef.current.pause();
     }
-  }, [currentPage, soundEnabled]);
+  }, [currentPage, soundEnabled, currentPageData.audioFile]);
 
   // 🎵 Manejar eventos de audio
   const handleAudioLoad = () => {
@@ -182,7 +192,13 @@ const PureInteractiveComicBook = () => {
   };
 
   // Componente Lucila con imagen PNG - RESPONSIVE
-  const LucilaBookCharacter = ({ state, mood, interactive = true }) => {
+  interface LucilaBookCharacterProps {
+    state: string;
+    mood: string;
+    interactive?: boolean;
+  }
+
+  const LucilaBookCharacter: React.FC<LucilaBookCharacterProps> = ({ state, mood, interactive = true }) => {
     const getStateAnimation = () => {
       switch (state) {
         case 'awakening':
@@ -233,20 +249,24 @@ const PureInteractiveComicBook = () => {
         <div className={`relative flex items-center justify-center ${
           isMobile ? 'w-28 h-36' : 'w-40 h-48'
         }`}>
-          
           {/* IMAGEN PNG DE LUCILA */}
-          <img 
-            src="/luzila/luzila.png" 
-            alt="Luzila - Guardiana de ElectroHuila" 
+          <Image
+            src="/luzila/luzila.png"
+            alt="Luzila - Guardiana de ElectroHuila"
             className="w-full h-full object-contain transition-all duration-500"
             style={{
               filter: getImageFilter()
             }}
+            width={isMobile ? 112 : 160} // w-28 or w-40 in px
+            height={isMobile ? 144 : 192} // h-36 or h-48 in px
             onError={(e) => {
               // Fallback si no encuentra la imagen
-              e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMDAgNTBDMTI3LjYxNCA1MCAxNTAgNzIuMzg1OCAxNTAgMTAwQzE1MCAxMjcuNjE0IDEyNy42MTQgMTUwIDEwMCAxNTBDNzIuMzg1OCAxNTAgNTAgMTI3LjYxNCA1MCAxMDBDNTAgNzIuMzg1OCA3Mi4zODU4IDUwIDEwMCA1MFoiIGZpbGw9IiNGRjY2MDAiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDEwTDMwIDMwSDEwTDIwIDEwWiIgZmlsbD0iIzNEQzNGNiIvPgo8L3N2Zz4KPC9zdmc+';
+              (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMDAgNTBDMTI3LjYxNCA1MCAxNTAgNzIuMzg1OCAxNTAgMTAwQzE1MCAxMjcuNjE0IDEyNy42MTQgMTUwIDEwMCAxNTBDNzIuMzg1OCAxNTAgNTAgMTI3LjYxNCA1MCAxMDBDNTAgNzIuMzg1OCA3Mi4zODU4IDUwIDEwMCA1MFoiIGZpbGw9IiNGRjY2MDAiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDEwTDMwIDMwSDEwTDIwIDEwWiIgZmlsbD0iIzNEQzNGNiIvPgo8L3N2Zz4KPC9zdmc+';
               console.log('Imagen de Lucila no encontrada, usando placeholder');
             }}
+            priority
+            unoptimized
+        
           />
           
           {/* Efectos adicionales por estado - RESPONSIVE */}
@@ -286,7 +306,7 @@ const PureInteractiveComicBook = () => {
   };
 
   // Efectos de página - RESPONSIVE
-  const PageEffects = ({ effects, mood }) => {
+  const PageEffects = ({ effects }: { effects: string[] }) => {
     return (
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {effects.includes('lightning') && (
@@ -359,15 +379,16 @@ const PureInteractiveComicBook = () => {
       </div>
     );
   };
-
-  const currentPageData = comicPages[currentPage];
-
+  
   return (
     <section id="luzila" className="min-h-screen relative overflow-hidden bg-gray-900">
       
       {/* Fondo de página */}
       <div className={`absolute inset-0 ${currentPageData.background} transition-all duration-1000`}>
-        <PageEffects effects={currentPageData.effects} mood={currentPageData.mood} />
+        <PageEffects effects={currentPageData.effects} />
+      </div>
+      <div className={`absolute inset-0 ${currentPageData.background} transition-all duration-1000`}>
+        <PageEffects effects={currentPageData.effects} />
       </div>
 
       {/* Libro principal - COMPLETAMENTE RESPONSIVE */}
@@ -377,9 +398,7 @@ const PureInteractiveComicBook = () => {
           {/* Página del libro - RESPONSIVE */}
           <div 
             ref={pageRef}
-            className={`relative bg-white bg-opacity-95 backdrop-blur-sm overflow-hidden shadow-2xl transform transition-all duration-700 ${
-              bookOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-90'
-            } ${isMobile ? 'rounded-2xl mx-1' : 'rounded-3xl'}`}
+            className={`relative bg-white bg-opacity-95 backdrop-blur-sm overflow-hidden shadow-2xl transform transition-all duration-700 scale-100 opacity-100 ${isMobile ? 'rounded-2xl mx-1' : 'rounded-3xl'}`}
           >
             
             {/* Encabezado del libro - RESPONSIVE */}
